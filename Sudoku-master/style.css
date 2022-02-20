@@ -1,0 +1,73 @@
+.container{
+ display:flex;
+ 
+}
+.menu-list{
+ display:flex;
+ flex-wrap:wrap:
+ background-color:yellow;
+}
+.menu-list div{
+ margin-left:20px;
+ 
+}
+
+.gameArea,.numbers{
+ width:384px;
+ height:384px;
+ display:flex;
+ flex-wrap:wrap;
+ background-color:#eaeaea; 
+}
+.gameArea div{
+	height:40px;
+	width:40px;
+	border: 1px solid black;
+	
+}
+.numbers {
+ width:420px;
+ height:40px;
+ display:flex;
+ flex-wrap:wrap;
+ background-color:#eaeaea; 
+}
+
+.numbers div{
+	height:40px;
+	width:40px;
+	border: 1px solid black;	
+}
+
+.numbeB9 {
+	height:40px;
+	width:40px;
+	border: 1px solid black;	
+	color:red;
+}
+
+#right{
+ border-right:4px solid black;
+}
+#bottom{
+ border-bottom:4px solid black;
+}
+#bottom-right{
+border-right:4px solid black;
+border-bottom:4px solid black;
+}
+
+button{
+width:40px;
+height:40px;
+border:0px solid #eaeaea;
+background-color:#eaeaea;
+}
+button:hover {background-color: #eaeaef}
+
+button:active {
+  background-color: #3e8e41;
+  border:"1px solid #0000FF";
+  
+ 
+}
