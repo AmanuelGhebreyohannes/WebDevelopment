@@ -1,4 +1,44 @@
 body {
     font-family: "Times New Roman", Georgia, serif;
-    font-size: medium;
+    font-size: 1.5vw; /* Font size scales with viewport width */
+    margin: 2vh 5vw; /* Margins adjust based on viewport height and width */
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Styles for screens less than 768px wide */
+    img{
+        width:300px;
+        height: 300px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    /* Styles for screens less than 768px wide */
+    img{
+        width:800px;
+        height: 800px;
+    }
+  }
+
+  .flex-container {
+    display: flex;
+  }
+
+  #first{
+    color: blue;
+  }
+  #second{
+    color: red;
+  }
+  #third{
+    color: magenta;
+  }
+  .headers{
+    color: brown;
+  }
+  h1,h2,h3,h4,h5,h6{
+    color: blueviolet
+  }
+
+  a:hover {
+    color: red;
   }
