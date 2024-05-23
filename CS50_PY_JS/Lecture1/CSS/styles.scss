@@ -1,3 +1,5 @@
+$primary-color: blue;
+
 body {
   font-family: "Times New Roman", Georgia, serif;
   font-size: 1.5vw; /* Font size scales with viewport width */
@@ -6,42 +8,39 @@ body {
 
 @media screen and (max-width: 768px) {
   /* Styles for screens less than 768px wide */
-  img {
-    width: 300px;
-    height: 300px;
+  img{
+      width:300px;
+      height: 300px;
   }
 }
 @media screen and (min-width: 768px) {
   /* Styles for screens less than 768px wide */
-  img {
-    width: 800px;
-    height: 800px;
+  img{
+      width:800px;
+      height: 800px;
   }
 }
+
 .flex-container {
   display: flex;
 }
 
-#first {
-  color: blue;
+#first{
+  color: $primary-color;;
 }
-
-#second {
+#second{
   color: black;
 }
-
-#third {
+#third{
   color: magenta;
 }
-
-.headers {
+.headers{
   color: brown;
 }
-
-h1, h2, h3, h4, h5, h6 {
-  color: blueviolet;
+h1,h2,h3,h4,h5,h6{
+  color: blueviolet
 }
 
 a:hover {
   color: red;
-}/*# sourceMappingURL=styles.css.map */
+}
