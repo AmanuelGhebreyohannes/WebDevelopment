@@ -4,6 +4,12 @@ body {
     font-family: Arial, sans-serif;
   }
 
+  .centered-form {
+    display: flex;  /* Use flexbox for centering */
+    justify-content: center;
+    align-items: center; /* Set minimum viewport height */
+  }
+
   #Navigation {
     color: blue;
     display: flex;
@@ -33,17 +39,18 @@ body {
         height: 40px;
         padding: 10px;
         border: 1px solid #ccc;
-        border-radius: 5px;
+        border-radius: 10px;
         font-size: 16px;
       }
       
       .search-button {
         margin-top: 20px; /* Adjust margin as needed */
+        margin-left: 85px;
         padding: 10px 20px;
         background-color: #007bff;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         cursor: pointer;
       }
   
