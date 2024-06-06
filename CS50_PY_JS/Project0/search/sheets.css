@@ -3,6 +3,10 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
   }
+  table{
+    font-size: 14px;
+    text-align: left;
+  }
 
   .centered-form {
     display: flex;  /* Use flexbox for centering */
@@ -53,4 +57,23 @@ body {
         border-radius: 10px;
         cursor: pointer;
       }
-  
+.Advanced-search{
+  color:red;
+  border-bottom: 1px solid lightgray; 
+  font-size: 20px;
+}
+.form-Advanced-search{
+  margin-left: 20px;
+
+}
+.button_Advanced_search{
+        margin-top: 20px; /* Adjust margin as needed */
+        margin-right: auto;
+        justify-content: right;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+
+}

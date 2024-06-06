@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Advanced Search</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evSXBKJEiFNJhqCsLnTmojOvCTpBVzudyBuloUHs7SYJhzGLzmevcaCa0LkmbyK" crossorigin="anonymous">
+        <title>Image Search</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="sheets.css">
     </head>
@@ -11,9 +10,51 @@
             <div class="menu"><a href="index.html">  Google Search</a></div>
         </div>
         <br><br>
-        <form action="https://google.com/search">
-            <input type="text" name="q">
-            <input type="submit" value="Google Advanced Search">
+        <div class="Advanced-search">
+            Advanced Search
+        </div>
+        <br>
+        <form class="form-Advanced-search" action="https://www.google.com/search" method="get">
+            <div>
+                Find pages with ...
+            </div>
+            <table>
+               
+                <tbody>
+                  <tr>
+                    <td>all these words:</td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td>this exact word or phrase:</td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td>any of these words:</td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td>none of these words:</td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td ><input type="submit"  class="button_Advanced_search" value="Advanced Search">  </td>
+                  </tr>
+                  
+                </tbody>
+            </table>
+            
+        
         </form>
+        <script>
+            function searchImages() {
+                    const searchTerm = document.querySelector('input[name="q"]').value;
+                    const imageSearchUrl = `https://www.google.com/search?q=${searchTerm}&tbm=isch`;
+                    window.location.href = imageSearchUrl;
+                }
+        </script>
+        
     </body>
 </html>
+
