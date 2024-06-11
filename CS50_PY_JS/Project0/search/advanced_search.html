@@ -14,7 +14,7 @@
             Advanced Search
         </div>
         <br>
-        <form class="form-Advanced-search" action="https://www.google.com/search" method="get">
+        <form id="advanced-search-form" class="form-Advanced-search">
             <div>
                 Find pages with ...
             </div>
@@ -23,19 +23,19 @@
                 <tbody>
                   <tr>
                     <td>all these words:</td>
-                    <td><input type="text"></td>
+                    <td><input id="all-words" type="text"></td>
                   </tr>
                   <tr>
                     <td>this exact word or phrase:</td>
-                    <td><input type="text"></td>
+                    <td><input id="exact-phrase" type="text"></td>
                   </tr>
                   <tr>
                     <td>any of these words:</td>
-                    <td><input type="text"></td>
+                    <td><input id="any-words" type="text"></td>
                   </tr>
                   <tr>
                     <td>none of these words:</td>
-                    <td><input type="text"></td>
+                    <td><input id="none-words" type="text"></td>
                   </tr>
                   <tr>
                     <td></td>
@@ -48,13 +48,35 @@
         
         </form>
         <script>
-            function searchImages() {
-                    const searchTerm = document.querySelector('input[name="q"]').value;
-                    const imageSearchUrl = `https://www.google.com/search?q=${searchTerm}&tbm=isch`;
-                    window.location.href = imageSearchUrl;
-                }
+             document.getElementById('advanced-search-form').addEventListener('submit', function(event) {
+             event.preventDefault(); // Prevent the default form submission
+             
+             // Construct the advanced search query
+             var query = '';
+             var allWords = document.getElementById('all-words').value.trim();
+             var exactPhrase = document.getElementById('exact-phrase').value.trim();
+             var anyWords = document.getElementById('any-words').value.trim();
+             var noneWords = document.getElementById('none-words').value.trim();
+             
+             // Construct the query string based on filled fields
+             if (allWords !== '') {
+                 query += 'allintext:' + encodeURIComponent(allWords) + ' ';
+             }
+             if (exactPhrase !== '') {
+                 query += '"' + encodeURIComponent(exactPhrase) + '" ';
+             }
+             if (anyWords !== '') {
+                 query += 'anyintext:' + encodeURIComponent(anyWords) + ' ';
+             }
+             if (noneWords !== '') {
+                 query += '-allintext:' + encodeURIComponent(noneWords) + ' ';
+             }
+             
+             // Redirect to Google search with the constructed query
+             window.location.href = 'https://www.google.com/search?q=' + query;
+         });
+     </script>
         </script>
         
     </body>
 </html>
-
