@@ -16,16 +16,8 @@
                 <input type="text" class="search-bar" placeholder = "Search" name="q"><br>
                 <input type="hidden" name="tbm" value="isch"> 
                 <button type="submit" class="search-button" value="Google Image Search"  onclick="searchImages()">Google Image Search</button>
-            </div>
-            
+            </div>            
         </form>
-        <script>
-            function searchImages() {
-                    const searchTerm = document.querySelector('input[name="q"]').value;
-                    const imageSearchUrl = `https://www.google.com/search?q=${searchTerm}&tbm=isch`;
-                    window.location.href = imageSearchUrl;
-                }
-        </script>
         
     </body>
 </html>
