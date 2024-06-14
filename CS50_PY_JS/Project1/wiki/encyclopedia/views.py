@@ -18,3 +18,4 @@ def title(request,title):
         "description":description,
         "page_available":page_available
     })
+
