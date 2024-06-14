@@ -12,6 +12,8 @@
             <a href="{% url 'encyclopedia:index' %}{{ entry }}">
                 <li>{{ entry }}</li>
             </a>
+        {% empty %}
+        <li> No Entry</li>
         {% endfor %}
     </ul>
 
