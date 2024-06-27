@@ -41,4 +41,11 @@ textarea {
     height: auto;
     min-height: 50px;
 }
-
+#Navigation {
+    color: blue;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: lightgrey;
+    position: absolute;
+    top: 0;
+    right: 0; }

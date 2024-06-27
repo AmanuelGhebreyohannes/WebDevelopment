@@ -94,3 +94,9 @@ def addPage(request):
         "createNewPageForm":forms.NewPageForm,
         "error":"Unable to save Page! Please try again!"
     })
+
+def editPage(request):
+    return render(request, "encyclopedia/createNewPage.html",{
+        "createNewPageForm":forms.NewPageForm,
+        "error":"Unable to save Page! Please try again!"
+    })

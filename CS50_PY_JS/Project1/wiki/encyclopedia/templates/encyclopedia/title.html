@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+    <div class="edit"><a  href="{% url 'encyclopedia:editPage' %}">Edit</a></div>
+    
     {% if page_available %}
     {{ description }}
     {% else %}

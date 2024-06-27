@@ -6,3 +6,7 @@ class SearchForm(forms.Form):
 class NewPageForm(forms.Form):
     title = forms.CharField(label="", max_length=100,widget=forms.TextInput(attrs={'class': 'search','name': 'title', 'placeholder': 'Enter Title'}))
     content = forms.CharField(label="",widget=forms.Textarea(attrs={'class': 'textareaPage','name': 'content', 'placeholder': 'Enter Markdown Content'}))
+
+class EditPageForm(forms.Form):
+    title = forms.CharField(label="", max_length=100,widget=forms.TextInput(attrs={'class': 'search','name': 'title', 'placeholder': 'Enter Title'}))
+    content = forms.CharField(label="",widget=forms.Textarea(attrs={'class': 'textareaPage','name': 'content', 'placeholder': 'Enter Markdown Content'}))
