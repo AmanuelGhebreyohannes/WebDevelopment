@@ -5,9 +5,10 @@
 {% endblock %}
 
 {% block body %}
+    <h4 class="alert-heading">{{ error }}</h4>
     <h1>Create New Page</h1>
 
-        <form action="{% url 'encyclopedia:' %}" method="post">
+        <form action="{% url 'encyclopedia:addPage' %}" method="post">
             {% csrf_token %}
             {{ createNewPageForm }}
             <button type="submit">Save</button>
