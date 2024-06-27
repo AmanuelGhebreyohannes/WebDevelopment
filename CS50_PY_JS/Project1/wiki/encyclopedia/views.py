@@ -56,3 +56,7 @@ def search(request):
         })
 
 
+def createNewPage(request):
+    return render(request, "encyclopedia/createNewPage.html",{
+        "createNewPageForm":forms.NewPageForm
+    })
