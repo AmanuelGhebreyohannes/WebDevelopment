@@ -64,7 +64,8 @@ def search(request):
 def createNewPage(request):
     return render(request, "encyclopedia/createNewPage.html",{
         "createNewPageForm":forms.NewPageForm,
-        "error":""
+        "error":"",
+        "editMode":False
     })
 
 def addPage(request):
@@ -95,8 +96,42 @@ def addPage(request):
         "error":"Unable to save Page! Please try again!"
     })
 
-def editPage(request):
-    return render(request, "encyclopedia/createNewPage.html",{
-        "createNewPageForm":forms.NewPageForm,
-        "error":"Unable to save Page! Please try again!"
-    })
+def editPage(request, title):
+    description = util.get_entry(title)
+    if(description == None):
+        description = ""
+    initial_data = {
+        'title': title,
+        'content': description,
+    }
+
+    form = forms.MyForm(initial=initial_data)
+    return render(request, "encyclopedia/updatePage.html", {'createNewPageForm': form})
+
+
+def updatePage(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        description = request.POST.get('content')
+        if(title in util.list_entries()):
+           
+            with open("entries/"+title+".md", 'w') as file:
+                file.write(f'{description}')
+            
+            return render(request, "encyclopedia/title.html", {
+                "title": title,
+                "description":util.get_entry(title),
+                "page_available":True,
+                "searchForm":forms.SearchForm
+                })
+
+
+    initial_data = {
+        'title': title,
+        'content': description,
+    }
+
+    form = forms.MyForm(initial=initial_data)
+    return render(request, "encyclopedia/updatePage.html", 
+                  {'createNewPageForm': form,
+                   "error":"Unable to save Page! Please try again!"})
