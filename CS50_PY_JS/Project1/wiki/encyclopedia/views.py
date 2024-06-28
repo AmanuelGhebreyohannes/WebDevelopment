@@ -1,3 +1,6 @@
+import random
+import markdown2
+from django.utils.safestring import mark_safe
 from django.shortcuts import render
 
 from . import util
@@ -14,9 +17,10 @@ def title(request,title):
     page_available = True
     if(description == None):
         page_available = False
+        description=""
     return render(request, "encyclopedia/title.html", {
         "title": title,
-        "description":description,
+        "description":mark_safe(markdown2.markdown(description)),
         "page_available":page_available,
         "searchForm":forms.SearchForm
     })
@@ -50,7 +54,7 @@ def search(request):
 
         return render(request, "encyclopedia/title.html", {
             "title": title,
-            "description":description,
+            "description":mark_safe(markdown2.markdown(description)),
             "page_available":page_available,
             "searchForm":forms.SearchForm
         })
@@ -79,11 +83,11 @@ def addPage(request):
             })
         else:
             with open("entries/"+title+".md", 'w') as file:
-                file.write(f'# {title} \n {description}')
+                file.write(f'#{title} \n {description}')
             
             return render(request, "encyclopedia/title.html", {
                 "title": title,
-                "description":util.get_entry(title),
+                "description":mark_safe(markdown2.markdown(util.get_entry(title))),
                 "page_available":True,
                 "searchForm":forms.SearchForm
                 })
@@ -120,7 +124,7 @@ def updatePage(request):
             
             return render(request, "encyclopedia/title.html", {
                 "title": title,
-                "description":util.get_entry(title),
+                "description":mark_safe(markdown2.markdown(util.get_entry(title))),
                 "page_available":True,
                 "searchForm":forms.SearchForm
                 })
@@ -128,10 +132,24 @@ def updatePage(request):
 
     initial_data = {
         'title': title,
-        'content': description,
+        'content': mark_safe(markdown2.markdown(description)),
     }
 
     form = forms.MyForm(initial=initial_data)
     return render(request, "encyclopedia/updatePage.html", 
                   {'createNewPageForm': form,
                    "error":"Unable to save Page! Please try again!"})
+
+
+def randomPage(request):
+    title = random.choice(util.list_entries())
+    description = util.get_entry(title)
+    page_available = True
+    if(description == None):
+        page_available = False
+    return render(request, "encyclopedia/title.html", {
+        "title": title,
+        "description": mark_safe(markdown2.markdown(description)),
+        "page_available":page_available,
+        "searchForm":forms.SearchForm
+    })

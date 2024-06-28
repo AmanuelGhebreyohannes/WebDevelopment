@@ -10,9 +10,8 @@
     
         <form action="{% url 'encyclopedia:addPage' %}" method="post">
             {% csrf_token %}
-            {{ createNewPageForm.as_p }}
-            
             <button type="submit">Save</button>
+            {{ createNewPageForm.as_p }}
         </form> 
 
 {% endblock %}
