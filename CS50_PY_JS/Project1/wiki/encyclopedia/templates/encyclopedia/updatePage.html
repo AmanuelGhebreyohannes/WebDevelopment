@@ -1,0 +1,19 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h4 class="alert-heading">{{ error }}</h4>
+    <h1>Edit Page</h1>
+    
+        <form action="{% url 'encyclopedia:updatePage' %}" method="post">
+            <button type="submit">Update</button>
+            {% csrf_token %}
+            {{ createNewPageForm.as_p }}
+            
+            
+        </form> 
+
+{% endblock %}
