@@ -3,5 +3,16 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    {% if auctionListings %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Published Date</th>
+            </tr>
+        </thead>
+    </table> 
+    {% endif %} 
+
 {% endblock %}
