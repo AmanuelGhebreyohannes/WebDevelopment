@@ -10,6 +10,7 @@ from . import forms
 
 
 def index(request):
+    error_message = ""
     if request.method == "POST":
 
         form_input = forms.createListingForm(request.POST)
@@ -33,6 +34,17 @@ def index(request):
 
             # save the new listing
             newList.save()
+
+            
+        else:
+            error_message = "INVALID INPUT"
+            return render(request,"auctions/createListing.html",{
+                'createListingForm':forms.createListingForm,
+                'error_message':error_message
+            })
+                    
+            
+
         
     
     # retrieve all listings
@@ -40,7 +52,7 @@ def index(request):
     auctionListings = auctionListing.objects.all()
 
 
-    return render(request, "auctions/index.html",{'auctionListings':auctionListings})
+    return render(request, "auctions/index.html",{'auctionListings':auctionListings,'error_message':error_message})
 
 
 def login_view(request):
