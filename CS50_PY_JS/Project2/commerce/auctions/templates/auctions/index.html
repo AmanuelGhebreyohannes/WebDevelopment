@@ -4,15 +4,42 @@
     <h2>Active Listings</h2>
 
     {% if auctionListings %}
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Published Date</th>
-            </tr>
-        </thead>
-    </table> 
+    <div class="container mt-4">
+
+        {% for auctionListing in auctionListings %}
+        <a href="{% url 'currentListing' auctionListing.id %}">
+            <div class="row">
+                <!-- First column (30% width) -->
+                <div class="col-12 col-md-4">
+                    <div class="row-content">
+                        <img src={{auctionListing.item_image}} width="95%" height="95%">
+                    </div>
+                </div>
+        
+                <!-- Second column (70% width) -->
+                <div class="col-12 col-md-8">
+                    <!-- First row with full width -->
+                    <div class="row-content">
+                        <h4>{{auctionListing.item_name}}</h4>
+                    </div>
+                    <!-- Second row with 75% width -->
+                    <div class="row-content" >
+                        <h5>Price: ${{auctionListing.price}}</h5>
+                    </div>
+                    <!-- Third row with 50% width -->
+                    <div class="row-content" >
+                        <h6>{{auctionListing.description}}</h6>
+                    </div>
+                    <!-- Fourth row with 25% width -->
+                    <div class="row-content">
+                        created {{auctionListing.created_at}}
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    
     {% endif %} 
 
 {% endblock %}
