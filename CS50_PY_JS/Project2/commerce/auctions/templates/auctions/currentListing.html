@@ -1,0 +1,65 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Listing: {{auctionListing.item_name}}</h2>
+
+    <div class="container mt-4">
+            <div class="row">
+                <p class="Watchlist" >
+                    Watchlist
+                </p>
+            </div>
+
+            <div class="row">
+                <div>                   
+                    <img src={{auctionListing.item_image}} width="95%" height="95%">
+                </div>
+            </div>    
+            <div class="row">    
+                <!-- Second column (70% width) -->
+                <div class="col-12 col-md-8">
+                    <!-- First row with full width -->
+                    <div class="row-content">
+                        <h5>{{auctionListing.description}}</h5>
+                    </div>
+                    <!-- Second row with 75% width -->
+                    <div class="row-content" >
+                        <h3>Price: ${{auctionListing.price}}</h3>
+                    </div>
+                    <!-- Third row with 50% width -->
+                    <div class="row-content" >
+                        <h6>{{auctionListing.bid_number}} bid(s) so far. Your bid is the current bid.</h6>
+                    </div>
+                    <!-- Fourth row with 25% width -->
+                    <div class="row-content">
+                        <form action="{% url 'index' %}" method="post">
+                            {% csrf_token %}
+                            {{ PlaceBids }}
+                    
+                            <!-- Display form errors -->
+                            {% if form.errors %}
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    <li>{{ field }}: {{ errors|striptags }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary">Place Bid</button>
+                        </form> 
+                    </div>
+                    <div class="row-content">
+                        Details:
+                        <ul>
+                            <li>Listed by: {{auctionListing.listedBy}}</li>
+                            <li>Category: {{auctionListing.category}}</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        
+        
+    </div>
+
+
+{% endblock %}

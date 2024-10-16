@@ -12,7 +12,7 @@ from . import forms
 
 def index(request):
     error_message = ""
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_authenticated:
 
         form_input = forms.createListingForm(request.POST)
 
@@ -30,7 +30,10 @@ def index(request):
                 item_image = new_item_image_url,
                 price = new_item_price,
                 description = new_item_description,
-                category = new_item_category
+                category = new_item_category,
+                listed_by = request.user,
+                bid_number = 0
+                
             )
 
             # save the new listing
@@ -127,7 +130,8 @@ def currentListing(request,id):
 
     #return render(request, "auctions/index.html")
     return render(request,"auctions/currentListing.html",{
-        'auctionListing':auctionListingItem
+        'auctionListing':auctionListingItem,
+        'PlaceBids':forms.PlaceBids,
     })
 
 
