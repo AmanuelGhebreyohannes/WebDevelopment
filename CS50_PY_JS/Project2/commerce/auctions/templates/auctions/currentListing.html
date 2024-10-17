@@ -5,9 +5,15 @@
 
     <div class="container mt-4">
             <div class="row">
-                <p class="Watchlist" >
-                    Watchlist
-                </p>
+                <a href="{% url 'updateWatchlist' auctionListing.id %}">
+                    {% if watchlisted %}
+                    <button type="button" class="btn btn-dark">Remove from Watchlist</button>
+                    {% else %}
+                    <button type="button" class="btn btn-dark">Add to Watchlist</button>
+                    {% endif %}
+
+                </a>
+                
             </div>
 
             <div class="row">

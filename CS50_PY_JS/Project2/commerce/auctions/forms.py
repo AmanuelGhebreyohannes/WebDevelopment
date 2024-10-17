@@ -3,7 +3,6 @@ from django import forms
 class PlaceBids(forms.Form):
     
     bid_value = forms.DecimalField(label="Bid")
-
     
 class createListingForm(forms.Form):
     OPTIONS = (
@@ -18,6 +17,9 @@ class createListingForm(forms.Form):
     start_bid_value = forms.DecimalField(label="start vid value $")
     image_url = forms.URLField()
     category =forms.ChoiceField(choices=OPTIONS)
+
+class watchlistForm(forms.Form):
+    pass
 
 
 

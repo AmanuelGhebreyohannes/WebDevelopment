@@ -3,6 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
+    watchlisted_items = models.JSONField(default=list)
     pass
 
 class auctionListing(models.Model):

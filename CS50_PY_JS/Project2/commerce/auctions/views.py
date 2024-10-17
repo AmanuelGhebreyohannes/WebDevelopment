@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, auctionListing
 from . import forms
@@ -110,9 +111,8 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
     
-@login_required
 def createListing(request):
-    if not User.is_authenticated:
+    if not request.user.is_authenticated:
         return render(request, "auctions/login.html")
     if request.method == "POST":
         return render(request, "auctions/index.html")
@@ -122,16 +122,49 @@ def createListing(request):
     })
 
 def currentListing(request,id):
-    if not User.is_authenticated:
+    watchlisted = False
+    if not request.user.is_authenticated:
         return render(request, "auctions/login.html")
     auctionListingItem = None
     if request.method == "GET":
         auctionListingItem = get_object_or_404(auctionListing,pk=id)
 
+    # check if item is already watchlisted
+    if(id not in request.user.watchlisted_items):
+        request.user.watchlisted_items.append(id)
+        watchlisted = True
+    else:
+        watchlisted = False    
+
     #return render(request, "auctions/index.html")
     return render(request,"auctions/currentListing.html",{
         'auctionListing':auctionListingItem,
         'PlaceBids':forms.PlaceBids,
+        'watchlisted':watchlisted
     })
 
 
+
+
+def updateWatchlist(request,id):
+    watchlisted = False
+    if not request.user.is_authenticated:
+        return render(request, "auctions/login.html")
+    auctionListingItem = None
+    if request.method == "GET":
+        auctionListingItem = get_object_or_404(auctionListing,pk=id)
+        if(id not in request.user.watchlisted_items):
+           request.user.watchlisted_items.append(id)
+           watchlisted = True
+        else:
+            request.user.watchlisted_items.remove(id)
+            watchlisted = False
+        # Save the user instance to persist the changes
+        request.user.save()
+
+    #return render(request, "auctions/index.html")
+    return render(request,"auctions/currentListing.html",{
+        'auctionListing':auctionListingItem,
+        'PlaceBids':forms.PlaceBids,
+        'watchlisted':watchlisted
+    })
