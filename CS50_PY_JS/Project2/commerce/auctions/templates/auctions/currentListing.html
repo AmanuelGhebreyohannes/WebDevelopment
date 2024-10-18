@@ -38,7 +38,7 @@
                     </div>
                     <!-- Fourth row with 25% width -->
                     <div class="row-content">
-                        <form action="{% url 'index' %}" method="post">
+                        <form action="{% url 'createListing' %}" method="post">
                             {% csrf_token %}
                             {{ PlaceBids }}
                     
@@ -56,7 +56,7 @@
                     <div class="row-content">
                         Details:
                         <ul>
-                            <li>Listed by: {{auctionListing.listedBy}}</li>
+                            <li>Listed by: {{listedby}}</li>
                             <li>Category: {{auctionListing.category}}</li>
                         </ul>
                     </div>

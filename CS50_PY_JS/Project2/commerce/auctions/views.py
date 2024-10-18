@@ -32,7 +32,7 @@ def index(request):
                 price = new_item_price,
                 description = new_item_description,
                 category = new_item_category,
-                listed_by = request.user,
+                listed_by = request.user.id,
                 bid_number = 0
                 
             )
@@ -40,6 +40,7 @@ def index(request):
             # save the new listing
             newList.save()
 
+        
             
         else:
             error_message = "INVALID INPUT"
@@ -114,8 +115,10 @@ def register(request):
 def createListing(request):
     if not request.user.is_authenticated:
         return render(request, "auctions/login.html")
-    if request.method == "POST":
-        return render(request, "auctions/index.html")
+    if request.method == "POST":         
+        # retrieve all listings
+        auctionListings = auctionListing.objects.all()
+        return render(request, "auctions/index.html",{'auctionListings':auctionListings})
     #return render(request, "auctions/index.html")
     return render(request,"auctions/createListing.html",{
         'createListingForm':forms.createListingForm
@@ -135,12 +138,13 @@ def currentListing(request,id):
         watchlisted = True
     else:
         watchlisted = False    
-
+    print(get_object_or_404(User,pk=auctionListingItem.listed_by).username)
     #return render(request, "auctions/index.html")
     return render(request,"auctions/currentListing.html",{
         'auctionListing':auctionListingItem,
         'PlaceBids':forms.PlaceBids,
-        'watchlisted':watchlisted
+        'watchlisted':watchlisted,
+        'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username
     })
 
 
