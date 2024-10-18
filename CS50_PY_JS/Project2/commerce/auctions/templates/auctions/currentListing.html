@@ -38,18 +38,21 @@
                     </div>
                     <!-- Fourth row with 25% width -->
                     <div class="row-content">
-                        <form action="{% url 'createListing' %}" method="post">
+                        <form action="{% url 'placeBid' %}" method="post">
                             {% csrf_token %}
-                            {{ PlaceBids }}
+                            <!-- {{ PlaceBids }} -->
+                            <input type="hidden" name="id" value="{{auctionListing.id}}"><br>
+                            <input type="number" name="bid" min="{{minBid}}" step="0.01" placeholder="Place Bid: {{minBid}}" required><br>
+
                     
-                            <!-- Display form errors -->
+                            <!-- Display form errors
                             {% if form.errors %}
                             <ul>
                                 {% for field, errors in form.errors.items %}
                                     <li>{{ field }}: {{ errors|striptags }}</li>
                                 {% endfor %}
                             </ul>
-                            {% endif %}
+                            {% endif %} -->
                             <button type="submit" class="btn btn-primary">Place Bid</button>
                         </form> 
                     </div>

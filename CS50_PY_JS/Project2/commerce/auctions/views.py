@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Max
 
-from .models import User, auctionListing
+from .models import User, auctionListing, bids
 from . import forms
 
 
@@ -134,17 +135,20 @@ def currentListing(request,id):
 
     # check if item is already watchlisted
     if(id not in request.user.watchlisted_items):
-        request.user.watchlisted_items.append(id)
-        watchlisted = True
+        watchlisted = False
     else:
-        watchlisted = False    
+        watchlisted = True 
+
+    max_bid = bids.objects.filter(auctionListing_id=auctionListingItem.id).aggregate(Max('bid_amount'))
+    max_bid = round(max(float(max_bid['bid_amount__max'])+0.01, float(auctionListingItem.price))+0.01,2)   
     print(get_object_or_404(User,pk=auctionListingItem.listed_by).username)
     #return render(request, "auctions/index.html")
     return render(request,"auctions/currentListing.html",{
         'auctionListing':auctionListingItem,
-        'PlaceBids':forms.PlaceBids,
+        # 'PlaceBids':forms.PlaceBids,
         'watchlisted':watchlisted,
-        'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username
+        'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username,
+        'minBid':max_bid
     })
 
 
@@ -165,10 +169,54 @@ def updateWatchlist(request,id):
             watchlisted = False
         # Save the user instance to persist the changes
         request.user.save()
+    max_bid = bids.objects.filter(auctionListing_id=auctionListingItem.id).aggregate(Max('bid_amount'))
+    max_bid = round(max(float(max_bid['bid_amount__max']), float(auctionListingItem.price))+0.01,2) 
 
     #return render(request, "auctions/index.html")
     return render(request,"auctions/currentListing.html",{
         'auctionListing':auctionListingItem,
-        'PlaceBids':forms.PlaceBids,
-        'watchlisted':watchlisted
+        # 'PlaceBids':forms.PlaceBids,
+        'watchlisted':watchlisted,
+        'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username,
+        'minBid':max_bid
     })
+
+@login_required
+def placeBid(request):
+    if request.method == "POST":
+
+        id = request.POST.get("id")
+        bid_amount = request.POST.get("bid")
+
+        # create a new listing
+        newBid = bids(
+            user_id = request.user.id,
+            auctionListing_id = id,
+            bid_amount = bid_amount,
+            
+        )
+
+        # save the new listing
+        newBid.save()
+
+        # retrieve max bid
+
+        max_bid = bids.objects.filter(auctionListing_id=newBid.auctionListing_id).aggregate(Max('bid_amount'))
+        auctionListingItem = get_object_or_404(auctionListing,pk=newBid.auctionListing_id)
+        max_bid = round(max(float(max_bid['bid_amount__max']), float(auctionListingItem.price))+0.01,2)
+        print(max_bid,bid_amount)
+        watchlisted = False
+        if(id not in request.user.watchlisted_items):
+            watchlisted = False
+        else:
+            watchlisted = True 
+
+        return render(request,"auctions/currentListing.html",{
+            'auctionListing':auctionListingItem,
+            # 'PlaceBids':forms.PlaceBids,
+            'watchlisted':watchlisted,
+            'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username,
+            'minBid': max_bid
+            })
+    
+

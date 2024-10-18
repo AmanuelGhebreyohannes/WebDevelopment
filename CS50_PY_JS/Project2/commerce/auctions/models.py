@@ -23,7 +23,7 @@ class auctionListing(models.Model):
 class bids(models.Model):
     user_id = models.IntegerField(default=-1)
     auctionListing_id = models.IntegerField(default=-1)
-    bid_amount = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    bid_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
 
     def __str__(self):

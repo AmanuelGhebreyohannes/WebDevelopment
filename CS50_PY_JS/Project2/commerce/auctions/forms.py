@@ -1,8 +1,8 @@
 from django import forms
 
-class PlaceBids(forms.Form):
+# class PlaceBids(forms.Form):
     
-    bid_value = forms.DecimalField(label="Bid")
+#     bid_value = forms.DecimalField(label="Bid")
     
 class createListingForm(forms.Form):
     OPTIONS = (
