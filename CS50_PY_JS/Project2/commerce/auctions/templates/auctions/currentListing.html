@@ -63,6 +63,9 @@
                             <li>Category: {{auctionListing.category}}</li>
                         </ul>
                     </div>
+                    {% if is_creator_of_listing %}
+                    <button type="button" class="btn btn-danger">Close bid</button>
+                    {% endif%}
 
                 </div>
             </div>

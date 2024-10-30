@@ -141,14 +141,15 @@ def currentListing(request,id):
 
     max_bid = bids.objects.filter(auctionListing_id=auctionListingItem.id).aggregate(Max('bid_amount'))
     max_bid = round(max(float(max_bid['bid_amount__max'])+0.01, float(auctionListingItem.price))+0.01,2)   
-    print(get_object_or_404(User,pk=auctionListingItem.listed_by).username)
+    is_creator_of_listing = (get_object_or_404(User,pk=auctionListingItem.listed_by).username == request.user.username)
     #return render(request, "auctions/index.html")
     return render(request,"auctions/currentListing.html",{
         'auctionListing':auctionListingItem,
         # 'PlaceBids':forms.PlaceBids,
         'watchlisted':watchlisted,
         'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username,
-        'minBid':max_bid
+        'minBid':max_bid,
+        'is_creator_of_listing':is_creator_of_listing
     })
 
 
@@ -171,6 +172,7 @@ def updateWatchlist(request,id):
         request.user.save()
     max_bid = bids.objects.filter(auctionListing_id=auctionListingItem.id).aggregate(Max('bid_amount'))
     max_bid = round(max(float(max_bid['bid_amount__max']), float(auctionListingItem.price))+0.01,2) 
+    is_creator_of_listing = (get_object_or_404(User,pk=auctionListingItem.listed_by).username == request.user.username)
 
     #return render(request, "auctions/index.html")
     return render(request,"auctions/currentListing.html",{
@@ -178,7 +180,8 @@ def updateWatchlist(request,id):
         # 'PlaceBids':forms.PlaceBids,
         'watchlisted':watchlisted,
         'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username,
-        'minBid':max_bid
+        'minBid':max_bid,
+        'is_creator_of_listing':is_creator_of_listing
     })
 
 @login_required
@@ -210,13 +213,15 @@ def placeBid(request):
             watchlisted = False
         else:
             watchlisted = True 
+        is_creator_of_listing = (get_object_or_404(User,pk=auctionListingItem.listed_by).username == request.user.username)
 
         return render(request,"auctions/currentListing.html",{
             'auctionListing':auctionListingItem,
             # 'PlaceBids':forms.PlaceBids,
             'watchlisted':watchlisted,
             'listedby':get_object_or_404(User,pk=auctionListingItem.listed_by).username,
-            'minBid': max_bid
+            'minBid': max_bid,
+            'is_creator_of_listing':is_creator_of_listing
             })
     
 
